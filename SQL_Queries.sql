@@ -1,6 +1,6 @@
 /*1. Data Understanding*/
 
-/* 1.1 Understanding ids (order and user) */
+/* 1.1 Understanding IDs (order and user) */
 SELECT 
     COUNT(*) AS total_rows,
     COUNT(DISTINCT order_id) AS unique_orders,
@@ -9,7 +9,7 @@ FROM
   `as-efood-bi-2023.assesment.orders`
 /*Total_rows: 656209. unique_orders: 656209 with 101379 distinct_users, some users order more than once time*/
 
-/*This query calculate the number of orders per user_id and sort them from highest count to lowest. The most orders is 218*/
+/*This query calculates the number of orders per user_id and sorts them from highest count to lowest. The most orders are 218*/
 SELECT
   user_id, COUNT(order_id) AS total_orders
 FROM 
@@ -29,7 +29,7 @@ FROM (
 
 /* 1.2 Understanding user_class */
 
-/*This query calculate the number of null values for the column user_class_name(0 null values found)*/
+/*This query calculates the number of null values for the column user_class_name(0 null values found)*/
 SELECT 
     COUNT(CASE WHEN user_class_name IS NULL THEN 1 END) AS user_class_null
 FROM 
@@ -46,7 +46,7 @@ FROM
 /* 1.3 Understanding order_timestamp 
 
 
-More detailed analysis in the section 2.Time-Based Analysis
+More detailed analysis in section 2.Time-Based Analysis
 */
 SELECT 
     DATE(order_timestamp) AS order_date,
@@ -57,13 +57,13 @@ ORDER BY order_date;
 
 /* 1.4 Understanding city */
 
-/*This query calculate the number of null values for the column city(0 null values found)*/
+/*This query calculates the number of null values for the column city(0 null values found)*/
 SELECT 
     COUNT(CASE WHEN city IS NULL THEN 1 END) AS city_null
 FROM 
     `as-efood-bi-2023.assesment.orders`
 
-/*This query calculate the number of orders group by city and sort them from highest to lowest*/
+/*This query calculates the number of orders grouped by city and sorts them from highest to lowest*/
 SELECT
   city, COUNT(*) AS count_by_city
 FROM 
@@ -73,13 +73,13 @@ FROM
 
 /* 1.5 Understanding vertical */
 
-/*This query calculate the number of null values for the column vertical(0 null values found)*/
+/*This query calculates the number of null values for the column vertical(0 null values found)*/
 SELECT 
     COUNT(CASE WHEN vertical IS NULL THEN 1 END) AS vertical_null
 FROM 
     `as-efood-bi-2023.assesment.orders`
 
-/*This query calculate the number of orders group by vertical and sort them from highest to lowest(99% of the values are restaurant and 1% local stores)*/
+/*This query calculates the number of orders grouped by vertical and sorts them from highest to lowest(99% of the values are restaurant and 1% local stores)*/
 SELECT
   vertical, COUNT(*) AS count_by_vertical
 FROM 
@@ -90,14 +90,14 @@ FROM
 
   /* 1.6 Understanding cuisine */
 
-/*This query calculate the number of null values for the column cuisine(0 null values found)*/
+/*This query calculates the number of null values for the column cuisine(0 null values found)*/
 SELECT 
     COUNT(CASE WHEN cuisine IS NULL THEN 1 END) AS cuisine_null
 FROM 
     `as-efood-bi-2023.assesment.orders`
 
 
-/*This query calculate the number of orders group by cuisine and sort them from highest to lowest. Also calculate the percentage of each cuisine.(5 categories found ,breakfast 43% and meat 30% category sums to 73%)*/
+/*This query calculates the number of orders grouped by cuisine and sorts them from highest to lowest. Also, calculate the percentage of each cuisine. (5 categories found, breakfast 43% and meat 30% category sums to 73%)*/
 SELECT 
   cuisine,
   COUNT(*) AS count_by_cuisine,
@@ -119,7 +119,7 @@ FROM
     `as-efood-bi-2023.assesment.orders`
 
 
-/*This query calculate the number of orders group by device and sort them from highest to lowest. Also calculate the percentage of each device.(4 categorys found.android 48% and ios 38% category sums to 86%)*/
+/*This query calculates the number of orders grouped by device and sorts them from highest to lowest. Also, calculate the percentage of each device. (4 categories found: android 48% and ios 38% category sums to 86%)*/
 SELECT 
   device,
   COUNT(*) AS count_by_device,
@@ -156,7 +156,7 @@ ORDER BY
 
  /* 1.9 Understanding order_contains_offer */
 
-/*This query calculate the number of null values for the column paid_cash(0 null values found)*/
+/*This query calculates the number of null values for the column paid_cash(0 null values found)*/
 SELECT 
     COUNT(CASE WHEN order_contains_offer IS NULL THEN 1 END) AS order_contains_offer_null
 FROM 
@@ -177,13 +177,13 @@ ORDER BY
 
  /* 1.10 Understanding coupon_discount_amount */
 
-/*This query calculate the number of null values for the column coupon_discount_amount(0 null values found)*/
+/*This query calculates the number of null values for the column coupon_discount_amount(0 null values found)*/
 SELECT 
     COUNT(CASE WHEN coupon_discount_amount IS NULL THEN 1 END) AS coupon_discount_amount_null
 FROM 
     `as-efood-bi-2023.assesment.orders`
 
-/*This query calculate the basic statistics for the column coupon_discount_amount
+/*This query calculates the basic statistics for the column coupon_discount_amount
 
 Output: avg 0.07, min 0, max 22.42, std 0.56
 */
@@ -247,7 +247,7 @@ WHERE
 
  /* 1.11 Understanding amount */
 
-/*This query calculate the number of null values for the column amount(0 null values found)*/
+/*This query calculates the number of null values for the column amount(0 null values found)*/
 SELECT 
     COUNT(CASE WHEN amount IS NULL THEN 1 END) AS amount_null
 FROM 
@@ -319,7 +319,7 @@ WHERE
 
 /* 1.12 Understanding delivery_cost */
 
-/*This query calculate the number of null values for the column delivery_cost(0 null values found)*/
+/*This query calculates the number of null values for the column delivery_cost(0 null values found)*/
 SELECT 
     COUNT(CASE WHEN delivery_cost IS NULL THEN 1 END) AS amount_null
 FROM 
@@ -346,7 +346,7 @@ Explanation:
 - 'bin_start' represents the starting value of each bin (the integer part of 'delivery_cost').
 - The result displays the frequency of 'delivery_cost' values within each bin, ordered by the starting value of the bins.
 
-Output: high positive (right) skewed distribution detected,majority of objervasion at zeor which make sense, next step check for outliers
+Output: high positive (right) skewed distribution detected, majority of observations at zero which make sense, next step check for outliers
 */
 SELECT 
     FLOOR(delivery_cost) AS bin_start,
@@ -394,8 +394,8 @@ WHERE
 /* This query retrieves the date and the count of orders placed on each day
 
 Comments: 
-1.There is trend were the orders per day moves with in tha range of 10-12k orders, also cyclicality detacted further investigation in below qeuries for peak days and peak hours. 
-2. Significant drop in orders at 15th august which make sense as is a very significant holiday for greek and the majority of the shops are close / customers prefer to eat home made with family and frierds or go dine out.
+1. There is a trend where the orders per day move within the range of 10-12k orders, also cyclicality detected further investigation in the below queries for peak days and peak hours. 
+2. Significant drop in orders on 15th august which makes sense as is a very significant holiday for greek and the majority of the shops are closed.
 .*/
 SELECT 
     DATE(order_timestamp) AS order_date,
@@ -407,7 +407,7 @@ ORDER BY order_date;
 /* This query will perform a similar analysis as the previous one, helping you identify the day of the week with the highest order volume
 
 Comments: 
-1. The orders per day of the week are evenly destributed
+1. The orders per day of the week are evenly distributed
 2. Friday has the most orders 99769 and second is Suterday 97885 the worse day is Monday with 83003
 .*/
 
@@ -421,8 +421,8 @@ ORDER BY daily_orders DESC;
 /* This query will perform a similar analysis as the previous one, helping you identify the hour of the day with the highest order volume
 
 Comments: 
-1. We observe 3 cycles during the day: The first start 6 the morning peak at 11 and bottom at 12. The second peak at 2 where is the common luncy time bottom at around 6-7 and the last one peak at 9 which is the common dinner time and its by far the biggest peak for the day.
-2. After midnight we observe a step slow down which make sense as the majority of stores are closed and the majority of the clients sleeping
+1. We observe 3 cycles during the day: The first starts at 6 in the morning peak at 11 and the bottom at 12. The second peak is at 2 which is the common lunch time bottom at around 6-7 and the last peak is at 9 which is the common dinner time and it's by far the biggest peak for the day.
+2. After midnight we observe a step slow down which makes sense as the majority of stores are closed and the majority of the clients sleeping
 .*/
 
 SELECT 
@@ -439,9 +439,9 @@ ORDER BY hourly_orders DESC
 
 
 Insights:  
-1.The biggest average amount is 16 by high spenders and the second is 13.65 for one timers
-2. However one timers has average coupon 0.24 which 3x times from the average (0.07) and the pct_coupon_used is aligh with the other classes which mean for these class the coupons are higher.
-3. Average Delivery cost is almost evenly destributed accross all segments except loyal customers where the average delivery cost is 0.07 which is the half of the general avearge.
+1. The biggest average amount is 16 for high spenders and the second is 13.65 for one-timers
+2. However one-timers has an average coupon of 0.24 which is 3x times the average (0.07) and the pct_coupon_used is aligned with the other classes which mean for these class the coupons are higher.
+3. Average Delivery cost is almost evenly distributed across all segments except loyal customers where the average delivery cost is 0.07 which is half of the general average.
 */
 
 SELECT 
@@ -455,10 +455,10 @@ ROUND(AVG(delivery_cost),2) AS average_delivery_cost_per_user_class,
 FROM `as-efood-bi-2023.assesment.orders`
 GROUP BY user_class_name
 
-/* 4.User Behavior Analysis*/
+/* 4. User Behavior Analysis*/
 
 
-/* This query will breakdown the number of order placed using differend divices and grouped by user_class
+/* This query will break the number of orders placed using different devices and grouped by user_class
 
 */
 SELECT 
@@ -471,10 +471,10 @@ SELECT
 FROM `as-efood-bi-2023.assesment.orders`
 GROUP BY user_class_name
 
-/* This query will breakdown the number of order paid with and without cash and grouped by user_class
+/* This query will breakdown the number of orders paid with and without cash and grouped by user_class
 
 Insights: 
-1. Only loyal class has significant more orders paid in cash than without cash
+1. Only the loyal class has significantly more orders paid in cash than without cash
 */
 SELECT 
     user_class_name, 
@@ -489,11 +489,11 @@ GROUP BY user_class_name
 
 
 /*
-This quiery calculate the order count, total amount, how much coupon used and the pct of these coupons order by cuisines.
+This query calculates the order count, total amount, how many coupons are used, and the pct of these coupons ordered by cuisines.
 
 Insights: 
-1. The most frequent order cuisine is breakfast but its second in total value behind category meat which is the second more popoular cuisine.
-2. In terms of coupon pct used the italian cuisine is in first place with 18% where is the 3rd most populara cuisine in terms of order volums and total amount.
+1. The most frequently ordered cuisine is breakfast but it is second in total value behind the category meat which is the second most popular cuisine.
+2. In terms of coupon pct used Italian cuisine is in first place with 18% where is the 3rd most popular cuisine in terms of order volumes and total amount.
 */
 SELECT 
     cuisine, 
@@ -508,15 +508,13 @@ GROUP BY cuisine
 /* 6.Targeting Users for Breakfast Coupon Campaign*/
 
 
-/* The first question we have to answer is who we need to target, so we want to investigate how classes distributed in the follow dimensions: 1. order volume 2. high average order value 3. pct of coupon used
-From these dimensions we will create 2 pools: 
-A) loyal/high spenders (customers who order frequently or spend significant more than other classes per order) as reward coupon
-B) Customers who doesnt used coupons and/or doesnt order breakfast casually to motivate them try this cuisine
+/* Targeting our audience begins with an investigation into class distribution across key dimensions: order volume, high average order value, and percentage of coupon usage. Using these criteria, we'll delineate two groups:
+A) Loyal/high spenders: Customers who frequently order or spend significantly more per order, rewarding their loyalty with coupons.
+B) Customers not using coupons or ordering breakfast casually, enticing them to explore this cuisine.
 
-Output: The class with most orders is the all star, the class with biggest avg_amount is high spenders with 9.32 avg_amount and also one of the two class with the lowest usage of coupons.
-Finally the class with the less orders is the one timers also is one of the two classes with the lowest usage of coupons.
+Key findings reveal that the class with the most orders stands out as the 'All-Star,' while 'High Spenders' boasts the highest average order value at 9.32 and exhibits one of the lowest coupon usage rates. Conversely, the 'One Timers' class, with the fewest orders, also demonstrates minimal coupon usage.
 
-These three clasees will be used for the coupon capaign.
+These three classes will form the foundation for our targeted coupon campaign.
 */
 SELECT 
     user_class_name, 
